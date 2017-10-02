@@ -4,9 +4,9 @@ Pix.all = [];
 Pix.doNotUse = [];
 Pix.workingArr = [];
 Pix.clickCountdown = 25;
-Pix.imgEl1 = document.getElementById('one');
-Pix.imgEl2 = document.getElementById('two');
-Pix.imgEl3 = document.getElementById('three');
+Pix.imgEl1 = document.getElementById('1');
+Pix.imgEl2 = document.getElementById('2');
+Pix.imgEl3 = document.getElementById('3');
 
 function Pix(picName, filePath){
   this.picName = picName;
@@ -37,12 +37,63 @@ new Pix('usb', 'assets/usb.gif');
 new Pix('water-can', 'assets/water-can.jpg');
 new Pix('wine-glass', 'assets/wine-glass.jpg');
 
-Pix.random = function (){
+Pix.random = function(){
   var randomIndex = Math.floor(Math.random() * Pix.all.length);
   if (Pix.doNotUse.indexOf(randomIndex) !== -1){
     Pix.random();
   }
   Pix.workingArr.push(Pix.all[randomIndex]);
-  Pix.all[randomIndex].viewNum++;
   Pix.doNotUse.push(randomIndex);
+  Pix.all[randomIndex].viewNum++;
+};
+
+Pix.populateImgs = function(){
+  for (var i = 1; i < 4; i++){
+    Pix.random();
+    var currentImg = document.getElementById(toString(i));
+    currentImg.src = Pix.workingArr[i].filePath;
+  }
+};
+
+Pix.rePopulateImgs = function(){
+  for (var i = 0; i < 3; i++){
+    Pix.workingArr.shift();
+  }
+  Pix.populateImgs();
+};
+
+Pix.bufferClear = function(){
+  for (var i = 0; i < 3; i++){
+    Pix.doNotUse.shift();
+  }
+};
+
+Pix.imgEl1.addEventListener('click', Pix.clickImg1);
+Pix.imgEl2.addEventListener('click', Pix.clickImg2);
+Pix.imgEl3.addEventListener('click', Pix.clickImg3);
+
+Pix.clickImg1 = function(){
+  Pix.all[Pix.doNotUse[0]].clickNum++;
+  Pix.reLoad();
+};
+
+Pix.clickImg2 = function(){
+  Pix.all[Pix.doNotUse[1]].clickNum++;
+  Pix.reLoad();
+};
+
+Pix.clickImg3 = function(){
+  Pix.all[Pix.doNotUse[2]].clickNum++;
+  Pix.reLoad();
+};
+
+Pix.reLoad = function(){
+  if (Pix.clickCountdown > 0){
+    Pix.rePopulateImgs();
+    Pix.bufferClear();
+    Pix.clickCountdown--;
+    return;
+  } else {
+  //  display all statistics
+  }
 };
