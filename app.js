@@ -147,14 +147,48 @@ Pix.displayResults = function(){
   Pix.resultsArrays();
   // Pix.imageEls.innerHTML = '';
   Pix.imageEls.removeEventListener('click', Pix.clickHandler);
-  for (var i = 0; i < Pix.all.length; i++){
-    var liEl = document.createElement('li');
-    liEl.textContent = Pix.all[i].clickNum + ' vote(s) for the ' + Pix.all[i].picName + ' which was viewed ' + Pix.all[i].viewNum + ' time(s).';
-    Pix.ulEl.appendChild(liEl);
-  }
+  // for (var i = 0; i < Pix.all.length; i++){
+  //   var liEl = document.createElement('li');
+  //   liEl.textContent = Pix.all[i].clickNum + ' vote(s) for the ' + Pix.all[i].picName + ' which was viewed ' + Pix.all[i].viewNum + ' time(s).';
+  //   Pix.ulEl.appendChild(liEl);
+  // }
+  Pix.drawChart();
 };
 
+Pix.chartData = {
+  labels: Pix.nameArr,
+  datasets: [
+    {
+      label: 'Number of Votes',
+      data: Pix.clickArr,
+      backgroundColor: 'black'
+    }]
+};
 
+Pix.drawChart = function(){
+  var ctx = document.getElementById('vote-tally').getContext('2d');
+  new Chart(ctx,{
+    type: 'bar',
+    data: Pix.chartData,
+    options: {
+      legend: {
+        labels: {
+          fontColor: 'black',
+          fontSize: 24
+        }
+      },
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 25,
+          min: 0,
+          stepSize: 1.0
+        }
+      }]
+    }
+  });
+};
 // Executable Code //
 
 Pix.grabImages();
