@@ -7,6 +7,8 @@ Pix.clickCountdown = 25;
 Pix.imgEl1 = document.getElementById('1');
 Pix.imgEl2 = document.getElementById('2');
 Pix.imgEl3 = document.getElementById('3');
+Pix.imageEls = document.getElementById('images');
+Pix.ulEl = document.getElementById('results');
 
 function Pix(picName, filePath){
   this.picName = picName;
@@ -94,6 +96,17 @@ Pix.reLoad = function(){
     Pix.clickCountdown--;
     return;
   } else {
-  //  display all statistics
+    Pix.displayResults();
   }
 };
+
+Pix.displayResults = function(){
+  Pix.imageEls.innerHTML = '';
+  for (var i = 0; i < Pix.all.length; i++){
+    var liEl = document.createElement('li');
+    liEl.textContent = Pix.all[i].clickNum + ' votes for the ' + Pix.all[i].picName;
+    Pix.ulEl.appendChild(liEl);
+  }
+};
+
+Pix.populateImgs();
