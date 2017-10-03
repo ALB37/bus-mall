@@ -176,6 +176,7 @@ Pix.drawChart = function(){
           fontColor: 'black',
           fontSize: 24
         }
+        // responsive: false
       },
     },
     scales: {
