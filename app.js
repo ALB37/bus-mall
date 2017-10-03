@@ -11,7 +11,9 @@ Pix.imgEl2 = document.getElementById('two');
 Pix.imgEl3 = document.getElementById('three');
 Pix.imageEls = document.getElementById('images');
 Pix.ulEl = document.getElementById('results');
-
+Pix.viewArr = [];
+Pix.clickArr = [];
+Pix.nameArr = [];
 
 // Constructor and Instances //
 
@@ -130,9 +132,19 @@ Pix.reLoad = function(){
   }
 };
 
+//Populate results arrays
+Pix.resultsArrays = function(){
+  for (var i = 0; i < Pix.all.length; i++){
+    Pix.viewArr.push(Pix.all[i].viewNum);
+    Pix.clickArr.push(Pix.all[i].clickNum);
+    Pix.nameArr.push(Pix.all[i].picName);
+  }
+};
+
 //Draw the tally screen
 Pix.displayResults = function(){
   Pix.reConcatArrs();
+  Pix.resultsArrays();
   // Pix.imageEls.innerHTML = '';
   Pix.imageEls.removeEventListener('click', Pix.clickHandler);
   for (var i = 0; i < Pix.all.length; i++){
