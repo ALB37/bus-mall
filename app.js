@@ -57,25 +57,25 @@ Pix.grabImages = function(){
   var obj1 = Pix.all.splice(Pix.random(), 1);
   var obj2 = Pix.all.splice(Pix.random(), 1);
   var obj3 = Pix.all.splice(Pix.random(), 1);
-  Pix.workingArr = [obj1, obj2, obj3];
+  Pix.workingArr = [obj1[0], obj2[0], obj3[0]];
   //Increase the view number for the objects chosen
   for (var i = 0; i < Pix.workingArr.length; i++){
-    Pix.workingArr[i][0].viewNum++;
+    Pix.workingArr[i].viewNum++;
   }
 };
 
 //Display images on the screen
 Pix.populateImgs = function(){
-  Pix.imgEl1.src = Pix.workingArr[0][0].filePath;
-  Pix.imgEl2.src = Pix.workingArr[1][0].filePath;
-  Pix.imgEl3.src = Pix.workingArr[2][0].filePath;
+  Pix.imgEl1.src = Pix.workingArr[0].filePath;
+  Pix.imgEl2.src = Pix.workingArr[1].filePath;
+  Pix.imgEl3.src = Pix.workingArr[2].filePath;
 };
 
 //Concatenate the working array to the Pix.all array
 Pix.reConcatArrs = function(){
-  for (var i = 0; i < Pix.workingArr.length; i++){
-    Pix.all = Pix.all.concat(Pix.workingArr[i][0]);
-  }
+  // for (var i = 0; i < Pix.workingArr.length; i++){
+  Pix.all = Pix.all.concat(Pix.workingArr);
+  // }
 };
 
 //Clear the working array and draw new images
@@ -102,17 +102,17 @@ Pix.imageEls.addEventListener('click', function(event){
 
 //Increment the vote tally for the picture chosen
 Pix.clickImg1 = function(){
-  Pix.workingArr[0][0].clickNum++;
+  Pix.workingArr[0].clickNum++;
   Pix.reLoad();
 };
 
 Pix.clickImg2 = function(){
-  Pix.workingArr[1][0].clickNum++;
+  Pix.workingArr[1].clickNum++;
   Pix.reLoad();
 };
 
 Pix.clickImg3 = function(){
-  Pix.workingArr[2][0].clickNum++;
+  Pix.workingArr[2].clickNum++;
   Pix.reLoad();
 };
 
