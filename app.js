@@ -5,7 +5,7 @@
 
 Pix.all = [];
 Pix.workingArr = [];
-Pix.clickCountdown = 25;
+Pix.clickCountdown = 24;
 Pix.imgEl1 = document.getElementById('one');
 Pix.imgEl2 = document.getElementById('two');
 Pix.imgEl3 = document.getElementById('three');
@@ -71,14 +71,17 @@ Pix.populateImgs = function(){
   Pix.imgEl3.src = Pix.workingArr[2][0].filePath;
 };
 
-//Concatenate the working array to the Pix.all array, clear the working array and draw new images
-Pix.rePopulateImgs = function(){
+//Concatenate the working array to the Pix.all array
+Pix.reConcatArrs = function(){
   for (var i = 0; i < Pix.workingArr.length; i++){
     Pix.all = Pix.all.concat(Pix.workingArr[i][0]);
   }
-  for (var j = 0; j < Pix.workingArr.length; j++){
-    Pix.workingArr.shift();
-  }
+};
+
+//Clear the working array and draw new images
+Pix.rePopulateImgs = function(){
+  Pix.reConcatArrs();
+  Pix.workingArr = [];
   Pix.grabImages();
   Pix.populateImgs();
 };
@@ -126,6 +129,7 @@ Pix.reLoad = function(){
 
 //Draw the tally screen
 Pix.displayResults = function(){
+  Pix.reConcatArrs();
   Pix.imageEls.innerHTML = '';
   for (var i = 0; i < Pix.all.length; i++){
     var liEl = document.createElement('li');
