@@ -86,8 +86,8 @@ Pix.rePopulateImgs = function(){
   Pix.populateImgs();
 };
 
-//Event listener for click on one of the images
-Pix.imageEls.addEventListener('click', function(event){
+//Event handler for click event
+Pix.clickHandler = function(event){
   console.log(event.target.id);
   if (event.target.id === 'one'){
     Pix.clickImg1();
@@ -98,7 +98,7 @@ Pix.imageEls.addEventListener('click', function(event){
   if (event.target.id === 'three'){
     Pix.clickImg3();
   };
-});
+};
 
 //Increment the vote tally for the picture chosen
 Pix.clickImg1 = function(){
@@ -116,6 +116,9 @@ Pix.clickImg3 = function(){
   Pix.reLoad();
 };
 
+//Event listener for click on one of the images
+Pix.imageEls.addEventListener('click', Pix.clickHandler);
+
 //Generate new images to vote on, or move to tally screen after 25 votes
 Pix.reLoad = function(){
   if (Pix.clickCountdown > 0){
@@ -130,7 +133,8 @@ Pix.reLoad = function(){
 //Draw the tally screen
 Pix.displayResults = function(){
   Pix.reConcatArrs();
-  Pix.imageEls.innerHTML = '';
+  // Pix.imageEls.innerHTML = '';
+  Pix.imageEls.removeEventListener('click', Pix.clickHandler);
   for (var i = 0; i < Pix.all.length; i++){
     var liEl = document.createElement('li');
     liEl.textContent = Pix.all[i].clickNum + ' vote(s) for the ' + Pix.all[i].picName + ' which was viewed ' + Pix.all[i].viewNum + ' time(s).';
