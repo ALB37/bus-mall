@@ -1,0 +1,8 @@
+body {
+  margin: 0 auto;
+}
+
+li {
+  display: inline-block;
+  margin: 15px;
+}
