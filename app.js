@@ -11,6 +11,9 @@ Pix.imgEl2 = document.getElementById('two');
 Pix.imgEl3 = document.getElementById('three');
 Pix.imageEls = document.getElementById('images');
 Pix.ulEl = document.getElementById('results');
+Pix.button = document.getElementById('skip-button');
+Pix.buttonParent = document.getElementById('button-section');
+Pix.buttonPress = 0;
 Pix.viewArr = [];
 Pix.clickArr = [];
 Pix.nameArr = [];
@@ -121,6 +124,24 @@ Pix.clickImg3 = function(){
 //Event listener for click on one of the images
 Pix.imageEls.addEventListener('click', Pix.clickHandler);
 
+//Event listener for button click
+Pix.button.addEventListener('click', Pix.buttonHandler);
+
+Pix.buttonHandler = function(event){
+  console.log(event);
+  if (Pix.buttonPress < 2) {
+    Pix.buttonPress ++;
+    Pix.reLoad();
+    return alert('You can skip voting on ' + (3 - Pix.buttonPress) + ' more image sets');
+  }
+  if (Pix.buttonPress === 2) {
+    Pix.button.removeEventListener('click', Pix.buttonHandler);
+    Pix.buttonParent.removeChild(Pix.button);
+    Pix.reLoad();
+    return alert('You\'ve used up all your skips now!');
+  }
+};
+
 //Generate new images to vote on, or move to tally screen after 25 votes
 Pix.reLoad = function(){
   if (Pix.clickCountdown > 0){
@@ -143,6 +164,8 @@ Pix.resultsArrays = function(){
 
 //Draw the tally screen
 Pix.displayResults = function(){
+  Pix.button.removeEventListener('click', Pix.buttonHandler);
+  Pix.buttonParent.removeChild(Pix.button);
   Pix.reConcatArrs();
   Pix.resultsArrays();
   // Pix.imageEls.innerHTML = '';
