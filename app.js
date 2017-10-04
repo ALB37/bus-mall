@@ -27,26 +27,32 @@ function Pix(picName, filePath){
   Pix.all.push(this);
 }
 
-new Pix('bag', 'assets/bag.jpg');
-new Pix('banana', 'assets/banana.jpg');
-new Pix('bathroom', 'assets/bathroom.jpg');
-new Pix('boots', 'assets/boots.jpg');
-new Pix('breakfast', 'assets/breakfast.jpg');
-new Pix('bubblegum', 'assets/bubblegum.jpg');
-new Pix('chair', 'assets/chair.jpg');
-new Pix('cthulhu', 'assets/cthulhu.jpg');
-new Pix('dog-duck', 'assets/dog-duck.jpg');
-new Pix('dragon', 'assets/dragon.jpg');
-new Pix('pen', 'assets/pen.jpg');
-new Pix('pet-sweep', 'assets/pet-sweep.jpg');
-new Pix('scissors', 'assets/scissors.jpg');
-new Pix('shark', 'assets/shark.jpg');
-new Pix('sweep', 'assets/sweep.png');
-new Pix('tauntaun', 'assets/tauntaun.jpg');
-new Pix('unicorn', 'assets/unicorn.jpg');
-new Pix('usb', 'assets/usb.gif');
-new Pix('water-can', 'assets/water-can.jpg');
-new Pix('wine-glass', 'assets/wine-glass.jpg');
+if (Boolean(localStorage.remember) === true) {
+  //Bring in old info that was stored
+  Pix.all = JSON.parse(localStorage.pixAll);
+
+} else {
+  new Pix('bag', 'assets/bag.jpg');
+  new Pix('banana', 'assets/banana.jpg');
+  new Pix('bathroom', 'assets/bathroom.jpg');
+  new Pix('boots', 'assets/boots.jpg');
+  new Pix('breakfast', 'assets/breakfast.jpg');
+  new Pix('bubblegum', 'assets/bubblegum.jpg');
+  new Pix('chair', 'assets/chair.jpg');
+  new Pix('cthulhu', 'assets/cthulhu.jpg');
+  new Pix('dog-duck', 'assets/dog-duck.jpg');
+  new Pix('dragon', 'assets/dragon.jpg');
+  new Pix('pen', 'assets/pen.jpg');
+  new Pix('pet-sweep', 'assets/pet-sweep.jpg');
+  new Pix('scissors', 'assets/scissors.jpg');
+  new Pix('shark', 'assets/shark.jpg');
+  new Pix('sweep', 'assets/sweep.jpg');
+  new Pix('tauntaun', 'assets/tauntaun.jpg');
+  new Pix('unicorn', 'assets/unicorn.jpg');
+  new Pix('usb', 'assets/usb.jpg');
+  new Pix('water-can', 'assets/water-can.jpg');
+  new Pix('wine-glass', 'assets/wine-glass.jpg');
+}
 
 
 // Functions //
@@ -169,6 +175,13 @@ Pix.displayResults = function(){
   Pix.resultsArrays();
   Pix.imageEls.removeEventListener('click', Pix.clickHandler);
   Pix.drawChart();
+  Pix.storeData();
+};
+
+//Store data in localStorage
+Pix.storeData = function(){
+  localStorage.pixAll = JSON.stringify(Pix.all);
+  localStorage.remember = true;
 };
 
 //Chart Data
@@ -193,6 +206,14 @@ Pix.drawChart = function(){
     type: 'bar',
     data: Pix.chartData,
     options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            min: 0,
+            beginAtZero: true
+          }
+        }]
+      },
       legend: {
         labels: {
           fontColor: 'black',
@@ -200,15 +221,6 @@ Pix.drawChart = function(){
         }
       },
     },
-    scales: {
-      yAxes: [{
-        ticks: {
-          max: 25,
-          min: 0,
-          stepSize: 1.0
-        }
-      }]
-    }
   });
 };
 
