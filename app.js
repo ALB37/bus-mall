@@ -10,8 +10,12 @@ Pix.imgEl1 = document.getElementById('one');
 Pix.imgEl2 = document.getElementById('two');
 Pix.imgEl3 = document.getElementById('three');
 Pix.imageEls = document.getElementById('images');
-Pix.ulEl = document.getElementById('results');
-
+Pix.h1El = document.getElementById('results');
+Pix.button = document.getElementById('skip-button');
+Pix.buttonPress = 0;
+Pix.viewArr = [];
+Pix.clickArr = [];
+Pix.nameArr = [];
 
 // Constructor and Instances //
 
@@ -57,25 +61,25 @@ Pix.grabImages = function(){
   var obj1 = Pix.all.splice(Pix.random(), 1);
   var obj2 = Pix.all.splice(Pix.random(), 1);
   var obj3 = Pix.all.splice(Pix.random(), 1);
-  Pix.workingArr = [obj1, obj2, obj3];
+  Pix.workingArr = [obj1[0], obj2[0], obj3[0]];
   //Increase the view number for the objects chosen
   for (var i = 0; i < Pix.workingArr.length; i++){
-    Pix.workingArr[i][0].viewNum++;
+    Pix.workingArr[i].viewNum++;
   }
 };
 
 //Display images on the screen
 Pix.populateImgs = function(){
-  Pix.imgEl1.src = Pix.workingArr[0][0].filePath;
-  Pix.imgEl2.src = Pix.workingArr[1][0].filePath;
-  Pix.imgEl3.src = Pix.workingArr[2][0].filePath;
+  Pix.imgEl1.src = Pix.workingArr[0].filePath;
+  Pix.imgEl2.src = Pix.workingArr[1].filePath;
+  Pix.imgEl3.src = Pix.workingArr[2].filePath;
 };
 
 //Concatenate the working array to the Pix.all array
 Pix.reConcatArrs = function(){
-  for (var i = 0; i < Pix.workingArr.length; i++){
-    Pix.all = Pix.all.concat(Pix.workingArr[i][0]);
-  }
+  // for (var i = 0; i < Pix.workingArr.length; i++){
+  Pix.all = Pix.all.concat(Pix.workingArr);
+  // }
 };
 
 //Clear the working array and draw new images
@@ -86,8 +90,8 @@ Pix.rePopulateImgs = function(){
   Pix.populateImgs();
 };
 
-//Event listener for click on one of the images
-Pix.imageEls.addEventListener('click', function(event){
+//Event handler for click event
+Pix.clickHandler = function(event){
   console.log(event.target.id);
   if (event.target.id === 'one'){
     Pix.clickImg1();
@@ -98,22 +102,45 @@ Pix.imageEls.addEventListener('click', function(event){
   if (event.target.id === 'three'){
     Pix.clickImg3();
   };
-});
+  if (event.target.id === 'skip-button'){
+    Pix.buttonEvent();
+  }
+};
 
 //Increment the vote tally for the picture chosen
 Pix.clickImg1 = function(){
-  Pix.workingArr[0][0].clickNum++;
+  Pix.workingArr[0].clickNum++;
   Pix.reLoad();
 };
 
 Pix.clickImg2 = function(){
-  Pix.workingArr[1][0].clickNum++;
+  Pix.workingArr[1].clickNum++;
   Pix.reLoad();
 };
 
 Pix.clickImg3 = function(){
-  Pix.workingArr[2][0].clickNum++;
+  Pix.workingArr[2].clickNum++;
   Pix.reLoad();
+};
+
+//Event listener for click on one of the images
+Pix.imageEls.addEventListener('click', Pix.clickHandler);
+
+//Button Conditionals; what happens when you click the skip button.
+Pix.buttonEvent = function(){
+  if (Pix.buttonPress > 2){
+    return alert('You can\'t skip any more images! Please pick your favorite, even if you don\'t like any.');
+  }
+  if (Pix.buttonPress < 2) {
+    Pix.buttonPress ++;
+    Pix.reLoad();
+    return alert('You can skip voting on ' + (3 - Pix.buttonPress) + ' more image sets');
+  }
+  if (Pix.buttonPress === 2) {
+    Pix.buttonPress ++;
+    Pix.reLoad();
+    return alert('You\'ve used up all your skips now!');
+  }
 };
 
 //Generate new images to vote on, or move to tally screen after 25 votes
@@ -127,17 +154,63 @@ Pix.reLoad = function(){
   }
 };
 
-//Draw the tally screen
-Pix.displayResults = function(){
-  Pix.reConcatArrs();
-  Pix.imageEls.innerHTML = '';
+//Populate results arrays
+Pix.resultsArrays = function(){
   for (var i = 0; i < Pix.all.length; i++){
-    var liEl = document.createElement('li');
-    liEl.textContent = Pix.all[i].clickNum + ' vote(s) for the ' + Pix.all[i].picName + ' which was viewed ' + Pix.all[i].viewNum + ' time(s).';
-    Pix.ulEl.appendChild(liEl);
+    Pix.viewArr.push(Pix.all[i].viewNum);
+    Pix.clickArr.push(Pix.all[i].clickNum);
+    Pix.nameArr.push(Pix.all[i].picName);
   }
 };
 
+//Draw the tally screen
+Pix.displayResults = function(){
+  Pix.reConcatArrs();
+  Pix.resultsArrays();
+  Pix.imageEls.removeEventListener('click', Pix.clickHandler);
+  Pix.drawChart();
+};
+
+//Chart Data
+Pix.chartData = {
+  labels: Pix.nameArr,
+  datasets: [
+    {
+      label: 'Number of Votes',
+      data: Pix.clickArr,
+      backgroundColor: 'black'
+    }]
+};
+
+//Draw Chart
+Pix.drawChart = function(){
+  var newEl = document.createElement('h1');
+  newEl.textContent = 'Results:';
+  Pix.h1El.appendChild(newEl);
+  Pix.button.parentNode.removeChild(Pix.button);
+  var ctx = document.getElementById('vote-tally').getContext('2d');
+  new Chart(ctx,{
+    type: 'bar',
+    data: Pix.chartData,
+    options: {
+      legend: {
+        labels: {
+          fontColor: 'black',
+          fontSize: 24
+        }
+      },
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 25,
+          min: 0,
+          stepSize: 1.0
+        }
+      }]
+    }
+  });
+};
 
 // Executable Code //
 

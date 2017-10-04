@@ -6,3 +6,13 @@ li {
   display: inline-block;
   margin: 15px;
 }
+
+button {
+  display: block;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 300px;
+  max-height: 300px;
+}

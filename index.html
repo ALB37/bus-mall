@@ -4,15 +4,19 @@
     <meta charset="utf-8">
     <title>Bus Mall Market Research</title>
     <link href="style.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
   </head>
   <body>
+    <h1>Choose your favorite!</h1>
     <ul id="images">
-      <li><img id="one" src="" width="300px" /></li>
-      <li><img id="two" src="" width="300px" /></li>
-      <li><img id="three" src="" width="300px" /></li>
+      <li><img id="one" src="" /></li>
+      <li><img id="two" src="" /></li>
+      <li><img id="three" src="" /></li>
+      <li><button id="skip-button" type="button" name="button">Skip this image set!</button></li>
     </ul>
-    <ul id="results">
-    </ul>
+    <div id="results">
+    </div>
+    <canvas id="vote-tally" width="840px" height="420px"></canvas>
     <script src="app.js">
     </script>
   </body>
