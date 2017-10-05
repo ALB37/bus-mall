@@ -28,7 +28,7 @@ function Pix(picName, filePath){
 }
 
 // Check if local storage exists, populate objects based on result
-if (Boolean(localStorage.remember) === true) {
+if (localStorage){
   //Bring in old info that was stored
   Pix.all = JSON.parse(localStorage.pixAll);
 } else {
@@ -137,12 +137,12 @@ Pix.buttonEvent = function(){
   if (Pix.buttonPress > 2){
     return alert('You can\'t skip any more images! Please pick your favorite, even if you don\'t like any.');
   }
-  if (Pix.buttonPress < 2) {
+  if (Pix.buttonPress < 2){
     Pix.buttonPress ++;
     Pix.reLoad();
     return alert('You can skip voting on ' + (3 - Pix.buttonPress) + ' more image sets');
   }
-  if (Pix.buttonPress === 2) {
+  if (Pix.buttonPress === 2){
     Pix.buttonPress ++;
     Pix.reLoad();
     return alert('You\'ve used up all your skips now!');
@@ -181,7 +181,6 @@ Pix.displayResults = function(){
 //Store data in localStorage
 Pix.storeData = function(){
   localStorage.pixAll = JSON.stringify(Pix.all);
-  localStorage.remember = true;
 };
 
 //Chart Data
