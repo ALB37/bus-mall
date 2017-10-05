@@ -200,6 +200,10 @@ Pix.drawChart = function(){
   var newEl = document.createElement('h1');
   newEl.innerHTML = '&darr; Results: &darr;';
   Pix.h1El.appendChild(newEl);
+  var newLink = document.createElement('a');
+  newLink.href = 'rec.html';
+  newLink.innerHTML = 'Link to Survey Summary Data';
+  Pix.h1El.appendChild(newLink);
   Pix.button.parentNode.removeChild(Pix.button);
   var ctx = document.getElementById('vote-tally').getContext('2d');
   new Chart(ctx,{
