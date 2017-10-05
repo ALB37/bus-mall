@@ -27,10 +27,10 @@ function Pix(picName, filePath){
   Pix.all.push(this);
 }
 
+// Check if local storage exists, populate objects based on result
 if (Boolean(localStorage.remember) === true) {
   //Bring in old info that was stored
   Pix.all = JSON.parse(localStorage.pixAll);
-
 } else {
   new Pix('bag', 'assets/bag.jpg');
   new Pix('banana', 'assets/banana.jpg');
@@ -191,14 +191,14 @@ Pix.chartData = {
     {
       label: 'Number of Votes',
       data: Pix.clickArr,
-      backgroundColor: 'black'
+      backgroundColor: 'forestgreen'
     }]
 };
 
 //Draw Chart
 Pix.drawChart = function(){
   var newEl = document.createElement('h1');
-  newEl.textContent = 'Results:';
+  newEl.innerHTML = '&darr; Results: &darr;';
   Pix.h1El.appendChild(newEl);
   Pix.button.parentNode.removeChild(Pix.button);
   var ctx = document.getElementById('vote-tally').getContext('2d');

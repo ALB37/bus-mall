@@ -1,5 +1,24 @@
 body {
+  background-color: rgb(255, 162, 122);
+  color: forestgreen;
+  text-align: center;
   margin: 0 auto;
+  width: 1080px;
+}
+
+h1 {
+  font-size: 48px;
+  font-family: monospace;
+}
+
+ul {
+  border: 2px solid forestgreen;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+hr {
+  border-color: forestgreen;
 }
 
 li {
@@ -13,6 +32,7 @@ button {
 }
 
 img {
-  max-width: 300px;
-  max-height: 300px;
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
 }
