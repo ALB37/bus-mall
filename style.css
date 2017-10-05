@@ -1,5 +1,40 @@
 body {
+  background-color: rgb(255, 162, 122);
+  color: forestgreen;
+  text-align: center;
   margin: 0 auto;
+  width: 1080px;
+}
+
+h1 {
+  font-size: 48px;
+  font-family: monospace;
+}
+
+ul {
+  border: 2px solid forestgreen;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+hr {
+  border-color: forestgreen;
+}
+
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: rgb(11, 62, 34);
+  border: 20px;
+  width: 300px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 24px;
+  display: block;
+}
+
+a:hover {
+  background-color: rgb(255, 186, 130);
+
 }
 
 li {
@@ -12,7 +47,36 @@ button {
   margin: 0 auto;
 }
 
+canvas {
+  margin-top: 45px;
+}
+
 img {
-  max-width: 300px;
-  max-height: 300px;
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+}
+
+table {
+	border: 10px solid rgb(88, 7, 7);
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+td {
+	padding: 10px;
+  border: 1px solid forestgreen;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(11, 62, 34);
+  background: rgb(246, 175, 80));
+}
+
+th {
+	color: black;
+  border: 1px solid forestgreen;
+  background: rgb(244, 137, 108);
+  width: 150px;
+  font-size: 16px;
 }
