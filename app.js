@@ -28,7 +28,7 @@ function Pix(picName, filePath){
 }
 
 // Check if local storage exists, populate objects based on result
-if (localStorage){
+if (localStorage.pixAll){
   //Bring in old info that was stored
   Pix.all = JSON.parse(localStorage.pixAll);
 } else {
